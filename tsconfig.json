@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "baseUrl": "./",
+    "rootDir": "./",
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@containers/*": ["src/containers/*"],
+      "@routes/*": ["src/routes/*"],
+      "@hocs/*": ["src/hocs/*"],
+      "@core/*": ["src/core/*"],
+      "@services/*": ["src/services/*"],
+      "@assets/*": ["src/assets/*"],
+      "@utils": ["src/utils/index"]
+    },
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "importsNotUsedAsValues": "preserve",
+    "experimentalDecorators": true
+  },
+  "exclude": ["node_modules", "webpack"]
+}

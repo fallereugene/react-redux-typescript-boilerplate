@@ -1,0 +1,23 @@
+@mixin col-sm {
+  @media screen and (orientation: landscape) and (min-width: 576px) and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin col-md {
+  @media screen and (orientation: landscape) and (min-width: 768px) and (max-width: 991px) {
+    @content;
+  }
+}
+
+@mixin col-lg {
+  @media screen and (orientation: landscape) and (min-width: 992px) and (max-width: 1199px) {
+    @content;
+  }
+}
+
+@mixin col-xl {
+  @media screen and (orientation: landscape) and (min-width: 1200px) and (max-width: 1400px) {
+    @content;
+  }
+}

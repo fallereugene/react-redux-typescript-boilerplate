@@ -1,0 +1,25 @@
+.main {
+  display: flex;
+  align-items: center;
+  width: 1280px;
+  height: 100vh;
+  position: relative;
+  background: #007bcc;
+  margin: 0 auto;
+  &__container {
+    width: 380px;
+    margin: 0 auto;
+    text-align: center;
+    &__logo {
+      width: 380px;
+      height: 200px;
+      background: url('../../assets/images/image.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      color: #fff;
+    }
+    .link {
+      margin-top: 30px;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+    "printWidth": 120,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "trailingComma": "all",
+    "arrowParens": "always",
+    "singleQuote": true,
+    "endOfLine": "auto",
+    "overrides": [
+        {
+            "files": ["*.html", "*.js", "*.css", "*.scss", "*.json"],
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": ["*.ts", "*.tsx"],
+            "options": {
+                "tabWidth": 4,
+                "parser": "typescript"
+            }
+        }
+    ]
+}

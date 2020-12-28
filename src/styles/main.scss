@@ -1,0 +1,10 @@
+@import '~normalize.css/normalize.css';
+@import 'variables.scss';
+@import 'mixins.scss';
+
+.link {
+  color: #fff;
+  font-size: 20px;
+  display: block;
+  text-align: center;
+}
