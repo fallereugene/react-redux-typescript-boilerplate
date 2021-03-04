@@ -2,26 +2,27 @@ import { Server, Model } from 'miragejs';
 import { list } from './fixtures';
 import { modelRoutes } from './routes';
 
-export const createServer = ({ environment = 'development' } = {}) => {
-    const server = new Server({
-        environment,
+export const createServer = (cb: Function, { environment = 'development' } = {}): void => {
+    Promise.resolve().then(() => {
+        new Server({
+            environment,
 
-        models: {
-            list: Model,
-        },
+            models: {
+                list: Model,
+            },
 
-        fixtures: {
-            list,
-        },
+            fixtures: {
+                list,
+            },
 
-        seeds(server) {
-            server.loadFixtures();
-        },
+            seeds(server) {
+                server.loadFixtures();
+            },
 
-        routes() {
-            modelRoutes(this);
-        },
+            routes() {
+                modelRoutes(this);
+            },
+        });
+        cb();
     });
-
-    return server;
 };

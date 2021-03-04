@@ -1,4 +1,4 @@
-import coreApi from '@/core/api';
+import coreApi from '@services/http';
 import { BASE_URI } from '../constants';
 
 export default (api: typeof coreApi) => ({

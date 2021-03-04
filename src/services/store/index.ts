@@ -1,10 +1,11 @@
-import { createStore, applyMiddleware, combineReducers, Store, ReducersMapObject } from 'redux';
 import thunk from 'redux-thunk';
+import { applyMiddleware, createStore, Store } from 'redux';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { IExtraArguments, IApplicationState, IRegisterReducer } from '@/contracts';
+import { IExtraArguments, IApplicationState } from '@/contracts';
 import logger from '@services/logger';
 import api from '../api';
+import combinedReducers from './combined-reducer';
 
 // дополнительные сервисы/аргументы для стора
 export const extraArgs: IExtraArguments = {
@@ -14,10 +15,10 @@ export const extraArgs: IExtraArguments = {
 
 export class ApplicationStore<TAppState extends IApplicationState, TExtraArgs extends IExtraArguments> {
     private _store: Store<TAppState>;
-    private _collection: ReducersMapObject<TAppState> = {} as ReducersMapObject<TAppState>;
 
     constructor(private _extraArgs: TExtraArgs) {
         this._store = this._createStore(this._extraArgs);
+        this._enableHot();
     }
 
     get store(): Store<TAppState> {
@@ -29,25 +30,12 @@ export class ApplicationStore<TAppState extends IApplicationState, TExtraArgs ex
     }
 
     /**
-     * Регистрация редьюсера в сторе
-     * @param reducers - объект редьюсеров
-     */
-    registerReducer(reducer: IRegisterReducer): void {
-        this._store.replaceReducer(
-            combineReducers<TAppState>({
-                ...this._collection,
-                ...reducer,
-            }),
-        );
-    }
-
-    /**
      * Создание стора
      * @param extraArgs - эктра аргументы
      */
-    private _createStore(extraArgs: TExtraArgs): Store<TAppState> {
+    private _createStore(extraArgs: TExtraArgs): any {
         return createStore(
-            () => ({} as TAppState),
+            combinedReducers,
             composeWithDevTools(
                 applyMiddleware(
                     thunk.withExtraArgument(extraArgs),
@@ -58,6 +46,14 @@ export class ApplicationStore<TAppState extends IApplicationState, TExtraArgs ex
                 ),
             ),
         );
+    }
+
+    private _enableHot() {
+        if ((module as any).hot) {
+            (module as any).hot.accept('./combined-reducer', () => {
+                this._store.replaceReducer(require('./combined-reducer').default);
+            });
+        }
     }
 }
 

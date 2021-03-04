@@ -3,7 +3,7 @@ import { DEFAULT_HEADERS, DEFAULT_OPTIONS, Method } from './constants';
 import { NetworkError, ServerError, AuthenticationError } from './errors';
 import Interceptor from './interceptor';
 
-class API extends Interceptor {
+class Http extends Interceptor {
     private _options = DEFAULT_OPTIONS;
     private _headers = DEFAULT_HEADERS;
 
@@ -136,4 +136,4 @@ class API extends Interceptor {
     }
 }
 
-export default new API();
+export default new Http();

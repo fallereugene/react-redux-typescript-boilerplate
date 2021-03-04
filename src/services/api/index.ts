@@ -1,4 +1,4 @@
-import coreApi from '@/core/api';
+import coreApi from '../http';
 import module from './module';
 
 export const registerInterceptors = () => {

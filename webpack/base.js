@@ -11,7 +11,7 @@ export default {
   output: {
     path: join(rootDir, `build/dist`),
     publicPath: isServer ? devServerUrl : `./`,
-    filename: isServer ? `[name].[fullhash].js` : `[name].[contenthash].js`,
+    filename: `[name].[contenthash].js`,
   },
   module: {
     rules: [rules.javascriptRule, rules.typescriptRule, rules.stylesRule, rules.imagesRule, rules.fontsRule],

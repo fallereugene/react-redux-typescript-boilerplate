@@ -10,5 +10,6 @@ export const devServerConfig = {
   overlay: false,
   port: DEFAULT_PORT,
   host: SERVER_HOST,
+  hot: true,
   headers: { 'Access-Control-Allow-Origin': '*' },
 };
