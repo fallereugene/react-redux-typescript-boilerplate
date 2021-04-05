@@ -1,7 +1,4 @@
 export default {
-  runtimeChunk: {
-    name: `runtime`,
-  },
   splitChunks: {
     cacheGroups: {
       commons: {

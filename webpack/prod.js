@@ -6,7 +6,9 @@ export default {
   mode: `production`,
   optimization: {
     minimize: true,
-    minimizer: [new TerserJSPlugin({}), new CssMinimizerPlugin()],
+    minimizer: [new TerserJSPlugin({
+      extractComments: false
+    }), new CssMinimizerPlugin()],
   },
   plugins: [plugins.cleanWebpackPlugin, plugins.copyWebpackPlugin, plugins.miniCssExtractPlugin],
   performance: {
