@@ -1,3 +1,4 @@
+import { Middleware as ReduxMiddleware } from 'redux';
 import { MapStateToProps } from 'react-redux';
 import { RouteProps } from 'react-router-dom';
 import { IApplicationState } from '@/contracts';
@@ -11,7 +12,7 @@ export type Action<TPayload> = {
     payload?: TPayload;
 };
 
-type Dispatch = <T extends any>(
+export type Dispatch = <T extends any>(
     action: T,
 ) => T extends (...args: any[]) => any ? ReturnType<T> : T extends Action<any> ? T : never;
 
@@ -60,3 +61,5 @@ export interface IExtraArguments {
     logger: typeof logger;
     api: typeof api;
 }
+
+export type Middleware = ReduxMiddleware<{}, IApplicationState, Dispatch>;

@@ -8,7 +8,7 @@ export const mapStateToProps: MapState<IMainStateProps> = (state) => ({
 });
 
 export const mapDispatchToProps: MapDispatch<IMainDispatchProps> = (dispatch) => ({
-    changeLocale: (locale: string) => dispatch(defineLocale(locale)),
+    changeLocale: (locale) => dispatch(defineLocale(locale)),
 });
 
 export default withConnect<IMainStateProps>(mapStateToProps, mapDispatchToProps)(Main);

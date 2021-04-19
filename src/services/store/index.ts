@@ -1,6 +1,7 @@
 import thunk from 'redux-thunk';
 import { applyMiddleware, createStore, Store, compose } from 'redux';
 import { createLogger } from 'redux-logger';
+import { httpMiddleware } from '@/middlewares';
 import { IExtraArguments, IApplicationState } from '@/contracts';
 import logger from '@services/logger';
 import api from '../api';
@@ -44,7 +45,7 @@ export class ApplicationStore<TAppState extends IApplicationState, TExtraArgs ex
     }
 
     private _getMiddlewares(extraArgs: TExtraArgs) {
-        const base = [thunk.withExtraArgument(extraArgs)];
+        const base = [thunk.withExtraArgument(extraArgs), httpMiddleware];
         if (this._isDevelopmentMode) {
             return [
                 ...base,

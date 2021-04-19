@@ -1,12 +1,12 @@
-import { WithRouterProps } from '@/contracts';
-import T from '@components/translation';
+import { WithRouterProps, Locales } from '@/contracts';
+import T from '@/services/translation';
 
 export interface IMainStateProps {
     locale: string;
 }
 
 export interface IMainDispatchProps {
-    changeLocale(locale: string): void;
+    changeLocale(locale: Locales): void;
 }
 
 type Props = WithRouterProps<IMainStateProps & IMainDispatchProps>;
@@ -17,7 +17,7 @@ const Main: React.FunctionComponent<Props> = ({ changeLocale, locale }) => {
             <div className="main__container">
                 <div className="main__container main__container__logo">
                     <button onClick={() => changeLocale(locale === `ru` ? `en` : `ru`)}>Change language</button>
-                    <T keyString="welcome" />
+                    {T(`welcome`)}
                 </div>
             </div>
         </div>

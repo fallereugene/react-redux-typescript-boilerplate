@@ -1,25 +1,24 @@
-import { Route, Redirect } from 'react-router-dom';
-import { WithRouterProps } from '@/contracts';
+import { Redirect } from 'react-router-dom';
 import { Routes } from '@/constants';
+import BaseRoute from '@/components/base-route';
 
 export interface IPrivateRouteStateProps {
     isAuthenticated: boolean;
-    render(): React.ReactNode;
 }
 
-type Props = WithRouterProps<IPrivateRouteStateProps>;
+export interface IPrivateRouteDispatchProps {
+    //
+}
 
-const PrivateRoute: React.FunctionComponent<Props> = (props) => {
-    const { render, path, exact, isAuthenticated } = props;
-    return (
-        <Route
-            path={path}
-            exact={exact}
-            render={(routeProps) => {
-                return isAuthenticated ? render(routeProps) : <Redirect to={Routes.ROOT} />;
-            }}
-        />
-    );
-};
+type Props = IPrivateRouteStateProps & IPrivateRouteDispatchProps;
 
-export default PrivateRoute;
+/**
+ * Приватный роут
+ */
+export default class PrivateRoute extends BaseRoute<Props> {
+    render() {
+        const { isAuthenticated, ...restRouteProps } = this.props;
+
+        return isAuthenticated ? <BaseRoute {...restRouteProps} /> : <Redirect to={Routes.ROOT} />;
+    }
+}

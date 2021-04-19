@@ -1,2 +1,2 @@
 export { default as Routes } from './routes';
-export { default as INITIAL_LOCALE } from './initial-locale';
+export { default as ResponseStatus } from './response-status';
