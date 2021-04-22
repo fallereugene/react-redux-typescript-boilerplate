@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { rootDir } from '../utils';
+import { rootDir, excludeNodeModulesExcept } from '../utils';
 
 export const babelLoader = {
   loader: 'babel-loader',
@@ -11,5 +11,5 @@ export const babelLoader = {
 export default {
   test: /\.(ts|tsx|js|jsx)$/,
   use: [babelLoader],
-  exclude: /node_modules/,
+  exclude: excludeNodeModulesExcept([]),
 };

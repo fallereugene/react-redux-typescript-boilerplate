@@ -7,7 +7,7 @@ import * as rules from './rules';
 export default {
   context: __dirname,
   target: `web`,
-  entry: join(rootDir, `src/index.tsx`),
+  entry: ['core-js', join(rootDir, `src/index.tsx`)],
   output: {
     path: join(rootDir, `build/dist`),
     publicPath: isServer ? devServerUrl : `./`,
