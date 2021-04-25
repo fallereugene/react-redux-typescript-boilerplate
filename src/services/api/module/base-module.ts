@@ -97,9 +97,6 @@ export default abstract class BaseModule {
             headers: {
                 ...this._config.headers,
                 'X-Correlation-ID': xCorrelationID,
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
             },
         };
     }

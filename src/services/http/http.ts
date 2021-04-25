@@ -36,7 +36,7 @@ class Http extends Interceptor {
 
     private async _fetchRequest<T>(method: Method, url: string, data: any, config?: IRequestConfig) {
         const body = data ? JSON.stringify(data) : undefined;
-        const headers = config?.headers ?? this._headers;
+        const headers = config && config.headers ? Object.assign({}, this._headers, config.headers) : this._headers;
         let request: RequestInit = {
             method,
             headers,

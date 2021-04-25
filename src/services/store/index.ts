@@ -6,11 +6,13 @@ import { IExtraArguments, IApplicationState } from '@/contracts';
 import logger from '@services/logger';
 import api from '../api';
 import combinedReducers from './combined-reducer';
+import storage from '@services/storage';
 
 // дополнительные сервисы/аргументы для стора
 export const extraArgs: IExtraArguments = {
     logger,
     api,
+    storage,
 };
 
 export class ApplicationStore<TAppState extends IApplicationState, TExtraArgs extends IExtraArguments> {

@@ -4,6 +4,7 @@ import { RouteProps } from 'react-router-dom';
 import { IApplicationState } from '@/contracts';
 import logger from '@services/logger';
 import api from '@services/api';
+import storage from '@services/storage';
 
 export type NullableObject = {} | null | undefined;
 
@@ -60,6 +61,7 @@ export type WithRouterProps<T extends NullableObject = {}> = T & RouteProps;
 export interface IExtraArguments {
     logger: typeof logger;
     api: typeof api;
+    storage: typeof storage;
 }
 
 export type Middleware = ReduxMiddleware<{}, IApplicationState, Dispatch>;
