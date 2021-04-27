@@ -12,6 +12,7 @@ export default {
     path: join(rootDir, `build/dist`),
     publicPath: isServer ? devServerUrl : `./`,
     filename: `[name].[contenthash].js`,
+    chunkFilename: `[name].[chunkhash].js`,
   },
   module: {
     rules: [rules.javascriptRule, rules.typescriptRule, rules.stylesRule, rules.imagesRule, rules.fontsRule],

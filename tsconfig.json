@@ -28,7 +28,6 @@
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "importsNotUsedAsValues": "preserve",
     "experimentalDecorators": true
   },
   "exclude": ["node_modules", "webpack"]

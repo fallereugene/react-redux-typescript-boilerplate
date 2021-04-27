@@ -1,3 +1,5 @@
+const tsConfigFile = require('../../tsconfig.json');
+
 export default {
   test: /\.tsx?$/,
   loader: `ts-loader`,
@@ -5,7 +7,7 @@ export default {
     // disable type checker - we will use it in fork plugin
     transpileOnly: true,
     logLevel: `info`,
-    configFile: `./tsconfig.json`,
+    compilerOptions: tsConfigFile,
     happyPackMode: true,
   },
   exclude: /node_modules/,
