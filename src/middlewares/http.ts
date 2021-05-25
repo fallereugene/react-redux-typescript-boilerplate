@@ -10,7 +10,6 @@ const httpMiddleware: Middleware = (store) => (next) => async (action: IRootInvo
     if (action.type === ActionTypes.ROOT_INVOKE_API && action.payload) {
         const { pendingApiMethod, resolve, ignoreResponseErrorStatusCodes } = action.payload;
         const result = await pendingApiMethod;
-        console.log(`result !!`, result);
         if (
             result.error &&
             ignoreResponseErrorStatusCodes?.length !== 0 &&
