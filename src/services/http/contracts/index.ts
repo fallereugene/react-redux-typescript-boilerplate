@@ -1,6 +1,3 @@
-export { default as IOptionsAPI } from './options';
-export { default as IRequestConfig } from './request-config';
-export { default as IChallenge } from './challenge';
-export { default as InterceptorProcessing } from './interceptor-processing';
-export { default as InterceptorManager } from './interceptor-manager';
-export { default as CustomResponse } from './custom-response';
+export type { default as IRequestConfig } from './request-config';
+export type { default as ErrorResponse } from './error-response';
+export type { default as SuccessResponse } from './success-response';

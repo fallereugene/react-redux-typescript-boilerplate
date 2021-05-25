@@ -1,4 +1,4 @@
-import { IApiConfig, RequestResult, RequestResultError, KnownHeaders } from '../contracts';
+import { IApiConfig, RequestResult } from '../contracts';
 import { v4 as uuidv4 } from 'uuid';
 import http from '../../http';
 
@@ -8,7 +8,7 @@ export default abstract class BaseModule {
     protected async _get<TReturn extends any = any>(url: string): Promise<RequestResult<TReturn>> {
         const xCorrelationID = this._generateXCorrelationID();
         return this._invoke(
-            this._http.getJson(`${this._config.baseUrl}${url}`, this._getConfig(xCorrelationID)),
+            this._http.get(`${this._config.baseUrl}${url}`, this._getConfig(xCorrelationID)),
             xCorrelationID,
         );
     }
@@ -19,7 +19,7 @@ export default abstract class BaseModule {
     ): Promise<RequestResult<TReturn>> {
         const xCorrelationID = this._generateXCorrelationID();
         return this._invoke(
-            this._http.postJson(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
+            this._http.post(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
             xCorrelationID,
         );
     }
@@ -30,7 +30,7 @@ export default abstract class BaseModule {
     ): Promise<RequestResult<TReturn>> {
         const xCorrelationID = this._generateXCorrelationID();
         return this._invoke(
-            this._http.putJson(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
+            this._http.put(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
             xCorrelationID,
         );
     }
@@ -41,7 +41,7 @@ export default abstract class BaseModule {
     ): Promise<RequestResult<TReturn>> {
         const xCorrelationID = this._generateXCorrelationID();
         return this._invoke(
-            this._http.patchJson(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
+            this._http.patch(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
             xCorrelationID,
         );
     }
@@ -52,7 +52,7 @@ export default abstract class BaseModule {
     ): Promise<RequestResult<TReturn>> {
         const xCorrelationID = this._generateXCorrelationID();
         return this._invoke(
-            this._http.deleteJson(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
+            this._http.delete(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
             xCorrelationID,
         );
     }
@@ -61,35 +61,17 @@ export default abstract class BaseModule {
         invokedMethod: Promise<any>,
         xCorrelationID: string,
     ): Promise<RequestResult<TReturn>> {
-        try {
-            const data = await invokedMethod;
+        const { statusCode, headers, data, error } = await invokedMethod;
+        if (error) {
             return {
-                data,
-                error: null,
-            };
-        } catch (error) {
-            const errorData: RequestResultError['error'] = ((): RequestResultError['error'] => {
-                const headers: KnownHeaders = {};
-                error.headers &&
-                    (error.headers as Headers).forEach((value, key) => {
-                        headers[key as keyof KnownHeaders] = value;
-                    });
-                return {
-                    xCorrelationID,
-                    statusCode: error.status,
-                    headers,
-                };
-            })();
-            const headers: KnownHeaders = {};
-            error.headers &&
-                (error.headers as Headers).forEach((value, key) => {
-                    headers[key as keyof KnownHeaders] = value;
-                });
-            return {
+                statusCode,
+                xCorrelationID,
+                headers,
                 data: null,
-                error: errorData,
+                error: {},
             };
         }
+        return { statusCode, xCorrelationID, headers, data, error };
     }
 
     private _getConfig(xCorrelationID: string): Partial<IApiConfig> {
@@ -97,6 +79,9 @@ export default abstract class BaseModule {
             headers: {
                 ...this._config.headers,
                 'X-Correlation-ID': xCorrelationID,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
             },
         };
     }

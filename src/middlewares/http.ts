@@ -10,12 +10,13 @@ const httpMiddleware: Middleware = (store) => (next) => async (action: IRootInvo
     if (action.type === ActionTypes.ROOT_INVOKE_API && action.payload) {
         const { pendingApiMethod, resolve, ignoreResponseErrorStatusCodes } = action.payload;
         const result = await pendingApiMethod;
+        console.log(`result !!`, result);
         if (
             result.error &&
             ignoreResponseErrorStatusCodes?.length !== 0 &&
-            !ignoreResponseErrorStatusCodes?.includes(result.error.statusCode)
+            !ignoreResponseErrorStatusCodes?.includes(result.statusCode)
         ) {
-            switch (result.error.statusCode) {
+            switch (result.statusCode) {
                 // обработка ошибок. Здесь можно обрабатывать как специфичные ошибки
                 // так и пушить в некоторое поле в сторе, чтобы затем выводить информацию об ошибке (например, поле X-Correlation-Id).
                 default:

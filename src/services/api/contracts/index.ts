@@ -1,2 +1,2 @@
 export { default as IApiConfig } from './api-config';
-export { RequestResult, RequestResultError, KnownHeaders } from './request-result';
+export { RequestResult, RequestResultError } from './request-result';
