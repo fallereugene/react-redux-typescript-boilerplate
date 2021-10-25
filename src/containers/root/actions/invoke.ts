@@ -1,7 +1,6 @@
 import { Dispatch } from '@/contracts';
 import { ResponseStatus } from '@/constants';
-import { ActionTypes } from '../constants';
-import { IRootInvokeAPI } from '../contracts';
+import { ROOT_INVOKE_ACTION_TYPE } from '../constants';
 import { RequestResult } from '@/services/api/contracts';
 
 type ActionConfig = {
@@ -14,6 +13,15 @@ type ActionConfig = {
 // тип, возвращаемый зарезолвленным промисом
 type UnboxPromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
 
+export interface IRootInvokeAPI {
+    type: typeof ROOT_INVOKE_ACTION_TYPE;
+    payload: {
+        pendingApiMethod: Promise<RequestResult<any>>;
+        resolve(data: RequestResult<any>): void;
+        ignoreResponseErrorStatusCodes?: Array<ResponseStatus>;
+    };
+}
+
 /**
  * Экшн для вызовов API
  * @param pendingApiMethod - вызванный метод API, результат которого нужно получить
@@ -25,7 +33,7 @@ const invoke = <TData, TApiMethod extends Promise<RequestResult<TData>>, TResult
 ) => async (dispatch: Dispatch) =>
     new Promise<TResult>((resolve) => {
         dispatch<IRootInvokeAPI>({
-            type: ActionTypes.ROOT_INVOKE_API,
+            type: ROOT_INVOKE_ACTION_TYPE,
             payload: {
                 pendingApiMethod,
                 resolve: resolve as () => RequestResult<any>,

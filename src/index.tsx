@@ -18,8 +18,6 @@ const renderApplication = (Component: React.ElementType) => {
 
 process.env.ENV !== `production` ? createServer(() => renderApplication(Root)) : renderApplication(Root);
 
-if ((module as any).hot) {
-    (module as any).hot.accept(`@containers/root`, () => {
-        renderApplication(require('@containers/root').default);
-    });
+if ((module as any).hot && (module as any).hot.accept) {
+    (module as any).hot.accept();
 }
