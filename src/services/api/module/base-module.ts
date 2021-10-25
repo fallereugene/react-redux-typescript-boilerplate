@@ -5,7 +5,7 @@ import http from '../../http';
 export default abstract class BaseModule {
     constructor(private _http: typeof http, private _config: IApiConfig) {}
 
-    protected async _get<TReturn extends any = any>(url: string): Promise<RequestResult<TReturn>> {
+    protected async _get<TReturn>(url: string): Promise<RequestResult<TReturn>> {
         const xCorrelationID = this._generateXCorrelationID();
         return this._invoke(
             this._http.get(`${this._config.baseUrl}${url}`, this._getConfig(xCorrelationID)),
@@ -13,10 +13,7 @@ export default abstract class BaseModule {
         );
     }
 
-    protected async _post<TReturn extends any = any, TData extends {} = {}>(
-        url: string,
-        data: TData,
-    ): Promise<RequestResult<TReturn>> {
+    protected async _post<TReturn, TData extends {} = {}>(url: string, data: TData): Promise<RequestResult<TReturn>> {
         const xCorrelationID = this._generateXCorrelationID();
         return this._invoke(
             this._http.post(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
@@ -24,10 +21,7 @@ export default abstract class BaseModule {
         );
     }
 
-    protected async _put<TReturn extends any = any, TData extends {} = {}>(
-        url: string,
-        data: TData,
-    ): Promise<RequestResult<TReturn>> {
+    protected async _put<TReturn, TData extends {} = {}>(url: string, data: TData): Promise<RequestResult<TReturn>> {
         const xCorrelationID = this._generateXCorrelationID();
         return this._invoke(
             this._http.put(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
@@ -35,10 +29,7 @@ export default abstract class BaseModule {
         );
     }
 
-    protected async _patch<TReturn extends any = any, TData extends {} = {}>(
-        url: string,
-        data: TData,
-    ): Promise<RequestResult<TReturn>> {
+    protected async _patch<TReturn, TData extends {} = {}>(url: string, data: TData): Promise<RequestResult<TReturn>> {
         const xCorrelationID = this._generateXCorrelationID();
         return this._invoke(
             this._http.patch(`${this._config.baseUrl}${url}`, data, this._getConfig(xCorrelationID)),
@@ -46,7 +37,7 @@ export default abstract class BaseModule {
         );
     }
 
-    protected async _delete<TReturn extends any = any, TData extends {} = {}>(
+    protected async _delete<TReturn, TData extends {} = {}>(
         url: string,
         data?: TData,
     ): Promise<RequestResult<TReturn>> {
@@ -57,7 +48,7 @@ export default abstract class BaseModule {
         );
     }
 
-    private async _invoke<TReturn extends any = any>(
+    private async _invoke<TReturn>(
         invokedMethod: Promise<any>,
         xCorrelationID: string,
     ): Promise<RequestResult<TReturn>> {

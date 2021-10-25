@@ -4,6 +4,9 @@ import * as plugins from './plugins';
 
 export default {
   mode: `production`,
+  output: {
+    clean: true
+  },
   target: ['web', 'es5'],
   optimization: {
     minimize: true,
@@ -27,7 +30,10 @@ export default {
       new CssMinimizerPlugin(),
     ],
   },
-  plugins: [plugins.cleanWebpackPlugin, plugins.copyWebpackPlugin, plugins.miniCssExtractPlugin],
+  plugins: [
+    plugins.copyWebpackPlugin, 
+    plugins.miniCssExtractPlugin
+  ],
   performance: {
     hints: false,
     maxEntrypointSize: 512000,

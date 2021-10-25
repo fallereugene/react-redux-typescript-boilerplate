@@ -1,5 +1,5 @@
-import { IRootInvokeAPI } from '@/containers/root/contracts';
-import { ActionTypes } from '@/containers/root/constants';
+import { IRootInvokeAPI } from '@/containers/root/actions/invoke';
+import { ROOT_INVOKE_ACTION_TYPE } from '@/containers/root/constants';
 import { Action, Middleware } from '@/contracts';
 
 /**
@@ -7,7 +7,7 @@ import { Action, Middleware } from '@/contracts';
  * Обработка ошибок происходит на этом же уровне.
  */
 const httpMiddleware: Middleware = (store) => (next) => async (action: IRootInvokeAPI | Action<null>) => {
-    if (action.type === ActionTypes.ROOT_INVOKE_API && action.payload) {
+    if (action.type === ROOT_INVOKE_ACTION_TYPE && action.payload) {
         const { pendingApiMethod, resolve, ignoreResponseErrorStatusCodes } = action.payload;
         const result = await pendingApiMethod;
         if (

@@ -8,12 +8,16 @@ import storage from '@services/storage';
 
 export type NullableObject = {} | null | undefined;
 
+type PropertyType<T> = T extends { [key: string]: infer U } ? U : never;
+
+export type ReducerActionTypes<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<PropertyType<T>>;
+
 export type Action<TPayload> = {
     type: string;
     payload?: TPayload;
 };
 
-export type Dispatch = <T extends any>(
+export type Dispatch = <T>(
     action: T,
 ) => T extends (...args: any[]) => any ? ReturnType<T> : T extends Action<any> ? T : never;
 
