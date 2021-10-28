@@ -1,4 +1,5 @@
-import { Middleware as ReduxMiddleware } from 'redux';
+/* eslint-disable */
+import { Middleware as ReduxMiddleware, Reducer as ReduxReducer } from 'redux';
 import { MapStateToProps } from 'react-redux';
 import { RouteProps } from 'react-router-dom';
 import { IApplicationState } from '@/contracts';
@@ -8,9 +9,18 @@ import storage from '@services/storage';
 
 export type NullableObject = {} | null | undefined;
 
-type PropertyType<T> = T extends { [key: string]: infer U } ? U : never;
+type PropertyType<T> = T extends { [key: string]: infer U }
+    ? U extends (...args: any[]) => Action<any>
+        ? ReturnType<U>
+        : never
+    : never;
 
-export type ReducerActionTypes<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<PropertyType<T>>;
+export type ReducerActionTypes<T extends { [key: string]: (...args: any[]) => any }> = PropertyType<T>;
+
+export type Reducer<TState, TActions extends { [key: string]: any }> = ReduxReducer<
+    TState,
+    ReducerActionTypes<TActions>
+>;
 
 export type Action<TPayload> = {
     type: string;

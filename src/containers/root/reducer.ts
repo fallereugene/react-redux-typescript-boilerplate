@@ -1,7 +1,6 @@
-import { Reducer } from 'redux';
+import { Reducer } from '@/contracts';
 import { IRootState } from './contracts';
-import { ReducerActionTypes } from '@/contracts';
-import { defineApplicationState, defineLocale } from './actions';
+import * as actions from './actions';
 
 const INITIAL_STATE: IRootState = {
     isApplicationReady: false,
@@ -9,13 +8,7 @@ const INITIAL_STATE: IRootState = {
     currentLocale: `ru`,
 };
 
-const actionCreators = {
-    defineApplicationState,
-    defineLocale,
-};
-type ReducerActions = ReducerActionTypes<typeof actionCreators>;
-
-export const reducer: Reducer<IRootState, ReducerActions> = (state = INITIAL_STATE, action) => {
+export const reducer: Reducer<IRootState, typeof actions> = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case `Root: Define Application State`:
             return {
