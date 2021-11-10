@@ -6,18 +6,17 @@
     "node": "14.18.0"
   },
   "scripts": {
-    "patch": "node scripts/update-version.js --env type=patch && npm run updateReleaseNotes && npm run build",
-    "minor": "node scripts/update-version.js --env type=minor && npm run updateReleaseNotes && npm run build",
-    "major": "node scripts/update-version.js --env type=major && npm run updateReleaseNotes && npm run build",
-    "updateReleaseNotes": "node scripts/update-release-notes.js",
+    "patch": "npm run build --env type=patch",
+    "minor": "npm run build --env type=minor",
+    "major": "npm run build --env type=major",
     "build": "webpack --config webpack.config.babel.js --progress --env mode=production",
-    "start": "webpack serve --config webpack.config.babel.js --progress --env mode=dev --env isDevServer"
+    "start": "webpack serve --env mode=dev --env isDevServer --config webpack.config.babel.js --progress"
   },
   "author": "Faller E.",
   "license": "MIT",
   "dependencies": {
     "axios": "0.23.0",
-    "history": "^4.10.1",
+    "history": "4.10.1",
     "moment": "2.29.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -63,7 +62,7 @@
     "postcss-loader": "6.2.0",
     "postcss-preset-env": "6.7.0",
     "postcss-short": "5.0.0",
-    "prettier": "^2.2.1",
+    "prettier": "2.2.1",
     "react-hot-loader": "4.13.0",
     "redux-devtools-extension": "2.13.9",
     "redux-logger": "3.0.6",
