@@ -2,39 +2,39 @@ import axios, { AxiosInstance, AxiosError, AxiosResponse } from 'axios';
 import { IRequestConfig, ErrorResponse, SuccessResponse } from './contracts';
 
 class Http {
-    private _http: AxiosInstance;
+    private http: AxiosInstance;
 
     constructor(httpService: typeof axios) {
         const TIMEOUT = 10000;
-        this._http = httpService.create({
+        this.http = httpService.create({
             timeout: TIMEOUT,
         });
     }
 
     async get<T = any>(url: string, config?: IRequestConfig): Promise<SuccessResponse | ErrorResponse> {
-        return this._http.get<T>(url, config).then(this._handleSuccess).catch(this._handleError);
+        return this.http.get<T>(url, config).then(Http.handleSuccess).catch(Http.handleError);
     }
 
     async post<T = any>(url: string, data: any, config?: IRequestConfig): Promise<SuccessResponse | ErrorResponse> {
-        return this._http.post<T>(url, data, config).then(this._handleSuccess).catch(this._handleError);
+        return this.http.post<T>(url, data, config).then(Http.handleSuccess).catch(Http.handleError);
     }
 
     async put<T = any>(url: string, data: any, config?: IRequestConfig): Promise<SuccessResponse | ErrorResponse> {
-        return this._http.put<T>(url, data, config).then(this._handleSuccess).catch(this._handleError);
+        return this.http.put<T>(url, data, config).then(Http.handleSuccess).catch(Http.handleError);
     }
 
     async patch<T = any>(url: string, data: any, config?: IRequestConfig): Promise<SuccessResponse | ErrorResponse> {
-        return this._http.patch<T>(url, data, config).then(this._handleSuccess).catch(this._handleError);
+        return this.http.patch<T>(url, data, config).then(Http.handleSuccess).catch(Http.handleError);
     }
 
     async delete<T = any>(url: string, data: any, config?: IRequestConfig) {
-        return this._http
+        return this.http
             .delete<T>(url, { data, ...config })
-            .then(this._handleSuccess)
-            .catch(this._handleError);
+            .then(Http.handleSuccess)
+            .catch(Http.handleError);
     }
 
-    private _handleSuccess(response: AxiosResponse): SuccessResponse {
+    private static handleSuccess(response: AxiosResponse): SuccessResponse {
         const { status, data, headers } = response;
         return {
             statusCode: status,
@@ -44,7 +44,7 @@ class Http {
         };
     }
 
-    private _handleError(error: AxiosError): ErrorResponse {
+    private static handleError(error: AxiosError): ErrorResponse {
         if (error.response) {
             const { status, headers } = error.response;
             // client received an error response (5xx, 4xx)

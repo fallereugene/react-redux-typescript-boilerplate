@@ -8,7 +8,8 @@ const INITIAL_STATE: IRootState = {
     currentLocale: `ru`,
 };
 
-export const reducer: Reducer<IRootState, typeof actions> = (state = INITIAL_STATE, action) => {
+export const reducer: Reducer<IRootState, typeof actions> = (currentState, action) => {
+    const state = currentState || INITIAL_STATE;
     switch (action.type) {
         case `Root: Define Application State`:
             return {

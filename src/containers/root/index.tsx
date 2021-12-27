@@ -1,1 +1,1 @@
-export { default } from './root.connect';
+export { default as Root } from './root.connect';
