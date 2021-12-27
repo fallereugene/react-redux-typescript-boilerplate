@@ -1,2 +1,3 @@
 import './styles.scss';
-export { default } from './loader';
+
+export { default as Loader } from './loader';

@@ -1,2 +1,3 @@
 import './styles.scss';
-export { default } from './main.connect';
+
+export { default as Main } from './main.connect';

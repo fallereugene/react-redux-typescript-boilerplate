@@ -1,12 +1,12 @@
 import thunk from 'redux-thunk';
 import { applyMiddleware, createStore, Store, compose } from 'redux';
 import { createLogger } from 'redux-logger';
+import storage from '@services/storage';
+import logger from '@services/logger';
 import { httpMiddleware } from '@/middlewares';
 import { IExtraArguments, IApplicationState } from '@/contracts';
-import logger from '@services/logger';
-import api from '../api';
+import { api } from '../api';
 import combinedReducers from './combined-reducer';
-import storage from '@services/storage';
 
 // дополнительные сервисы/аргументы для стора
 export const extraArgs: IExtraArguments = {
@@ -16,39 +16,35 @@ export const extraArgs: IExtraArguments = {
 };
 
 export class ApplicationStore<TAppState extends IApplicationState, TExtraArgs extends IExtraArguments> {
-    private _store: Store<TAppState>;
+    private applicationStore: Store<TAppState>;
 
-    private _isDevelopmentMode = process.env.ENV !== `production`;
+    private isDevelopmentMode = process.env.ENV !== 'production';
 
-    constructor(private _extraArgs: TExtraArgs) {
-        this._store = this._createStore(this._extraArgs);
-        this._enableHot();
+    constructor(private extraArgs: TExtraArgs) {
+        this.extraArgs = extraArgs;
+        this.applicationStore = this.createStore();
+        this.enableHot();
     }
 
     get store(): Store<TAppState> {
-        return this._store;
+        return this.applicationStore;
     }
 
     get state(): TAppState {
-        return this._store.getState();
+        return this.applicationStore.getState();
     }
 
-    /**
-     * Создание стора
-     * @param extraArgs - эктра аргументы
-     */
-    private _createStore(extraArgs: TExtraArgs): any {
-        const composeEnhancers =
-            (this._isDevelopmentMode && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+    private createStore(): any {
+        const composeEnhancers = (this.isDevelopmentMode && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
         return createStore(
             combinedReducers,
-            composeEnhancers(applyMiddleware(thunk.withExtraArgument(extraArgs), ...this._getMiddlewares(extraArgs))),
+            composeEnhancers(applyMiddleware(thunk.withExtraArgument(extraArgs), ...this.getMiddlewares())),
         );
     }
 
-    private _getMiddlewares(extraArgs: TExtraArgs) {
+    private getMiddlewares() {
         const base = [thunk.withExtraArgument(extraArgs), httpMiddleware];
-        if (this._isDevelopmentMode) {
+        if (this.isDevelopmentMode) {
             return [
                 ...base,
                 createLogger({
@@ -60,10 +56,12 @@ export class ApplicationStore<TAppState extends IApplicationState, TExtraArgs ex
         return [...base];
     }
 
-    private _enableHot() {
-        if ((module as any).hot) {
-            (module as any).hot.accept('./combined-reducer', () => {
-                this._store.replaceReducer(require('./combined-reducer').default);
+    private enableHot() {
+        if (module.hot) {
+            // eslint-disable-next-line
+            module.hot.accept('./combined-reducer', () => {
+                // eslint-disable-next-line
+                this.applicationStore.replaceReducer(require('./combined-reducer').default);
             });
         }
     }

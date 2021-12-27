@@ -4,7 +4,7 @@ import { MapStateToProps } from 'react-redux';
 import { RouteProps } from 'react-router-dom';
 import { IApplicationState } from '@/contracts';
 import logger from '@services/logger';
-import api from '@services/api';
+import { api } from '@services/api';
 import storage from '@services/storage';
 
 export type NullableObject = {} | null | undefined;

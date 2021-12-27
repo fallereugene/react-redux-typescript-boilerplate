@@ -9,7 +9,7 @@ interface IPost {
 }
 
 export default class Module extends BaseModule {
-    async get(): Promise<RequestResult<IPost[]>> {
-        return super._get(`/posts`);
+    async getList(): Promise<RequestResult<IPost[]>> {
+        return super.get(`/posts`);
     }
 }

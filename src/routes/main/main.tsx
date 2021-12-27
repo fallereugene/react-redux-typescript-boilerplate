@@ -16,7 +16,9 @@ const Main: React.FunctionComponent<Props> = ({ changeLocale, locale }) => {
         <div className="main">
             <div className="main__container">
                 <div className="main__container main__container__logo">
-                    <button onClick={() => changeLocale(locale === `ru` ? `en` : `ru`)}>Change language</button>
+                    <button type="button" onClick={() => changeLocale(locale === `ru` ? `en` : `ru`)}>
+                        Change language
+                    </button>
                     {T(`welcome`)}
                 </div>
             </div>
