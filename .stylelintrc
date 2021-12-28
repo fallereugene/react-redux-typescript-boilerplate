@@ -1,6 +1,7 @@
 {
   "extends": ["stylelint-config-standard-scss"],
   "rules": {
+    "indentation": 4,
     "string-quotes": "single",
     "max-empty-lines": 2,
     "max-nesting-depth": 7,

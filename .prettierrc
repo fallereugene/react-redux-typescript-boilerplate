@@ -11,7 +11,7 @@
         {
             "files": ["*.html", "*.js", "*.css", "*.scss", "*.json"],
             "options": {
-                "tabWidth": 2
+                "tabWidth": 4
             }
         },
         {
@@ -19,6 +19,12 @@
             "options": {
                 "tabWidth": 4,
                 "parser": "typescript"
+            }
+        },
+        {
+            "files": ["*.txt"],
+            "options": {
+                "requirePragma": true
             }
         }
     ]
