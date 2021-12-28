@@ -9,7 +9,7 @@
         "patch": "npm run format && npm run build --env type=patch",
         "minor": "npm run format && npm run build --env type=minor",
         "major": "npm run format && npm run build --env type=major",
-        "build": "npm run format && webpack --config webpack.config.babel.js --progress --env mode=production",
+        "build": "webpack --config webpack.config.babel.js --progress --env mode=production",
         "start": "webpack serve --env mode=dev --env isDevServer --config webpack.config.babel.js --progress",
         "format": "npm run fix:eslint && npm run fix:prettier && npm run check:eslint",
         "fix:eslint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
