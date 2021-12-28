@@ -1,4 +1,4 @@
-import {getParsedArguments} from '.';
+import getParsedArguments from './get-parsed-arguments';
 
 const parsedArguments = getParsedArguments();
 
