@@ -1,6 +1,5 @@
 const path = require('path');
 module.exports = {
-    ignorePatterns: ['*.scss', '*.html', '*.jpg', '*.png', '*.svg', '*.json', '*.txt', '*.md'],
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint', 'react', 'prettier'],
     env: {
