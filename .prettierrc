@@ -20,12 +20,6 @@
                 "tabWidth": 4,
                 "parser": "typescript"
             }
-        },
-        {
-            "files": ["*.txt"],
-            "options": {
-                "requirePragma": true
-            }
         }
     ]
 }
