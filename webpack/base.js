@@ -1,6 +1,6 @@
 import { join } from 'path';
-import { rootDir, isServer } from './utils';
-import { optimization, alias, devServerUrl } from './configs';
+import { rootDir } from './utils';
+import { alias } from './configs';
 import * as plugins from './plugins';
 import * as rules from './rules';
 
@@ -10,9 +10,16 @@ export default {
     entry: ['core-js', join(rootDir, `src/index.tsx`)],
     output: {
         path: join(rootDir, `build/dist`),
-        filename: `[name].[contenthash].js`,
-        chunkFilename: `[name].[chunkhash].js`,
-        publicPath: isServer ? devServerUrl : `./`,
+    },
+    cache: {
+        type: 'filesystem',
+        version: String(Date.now()),
+        cacheDirectory: join(rootDir, 'node_modules/.cache'),
+        store: 'pack',
+        buildDependencies: {
+            defaultWebpack: ['webpack/lib/'],
+            config: [__filename],
+        },
     },
     module: {
         rules: [rules.javascriptRule, rules.typescriptRule, rules.stylesRule, rules.imagesRule, rules.fontsRule],
@@ -22,12 +29,11 @@ export default {
         plugins.forkTsCheckerWebpackPlugin,
         plugins.eslintPlugin,
         plugins.definePlugin,
-        plugins.providePlugin,
         plugins.stylelintPlugin,
+        plugins.providePlugin,
     ],
     resolve: {
         alias,
-        extensions: [`.tsx`, `.ts`, `.js`, `.jsx`],
+        extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
-    optimization,
 };
