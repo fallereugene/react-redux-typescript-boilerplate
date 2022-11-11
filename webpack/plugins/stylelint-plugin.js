@@ -9,6 +9,8 @@ const config = {
     context: join(rootDir, '/src'),
     // specify the glob pattern for finding files
     files: [`**/*.scss`],
+    cache: true,
+    cacheLocation: join(rootDir, 'node_modules/.cache/.stylelintcache'),
 };
 
 export default new StyleLintPlugin(config);
